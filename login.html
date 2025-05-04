@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Sistem Kasir Rumah Sakit</title>
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <style>
+    /* Warna Gradient atas-bawah */
+    .color-bar-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10vh;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      z-index: 0;
+    }
+
+    .color-bar-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 15vh;
+      background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+      z-index: 0;
+    }
+
+    .login-page {
+      background: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .login-box {
+      width: 360px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo img {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+  </style>
+</head>
+<body class="login-page">
+  <!-- Warna atas -->
+  <div class="color-bar-top"></div>
+
+  <div class="login-box">
+    <!-- Logo -->
+    <div class="login-logo">
+      <img src="https://seeklogo.com/images/M/medical-hospital-logo-463FA27180-seeklogo.com.png" alt="Logo" style="height: 80px;">
+      <h3 class="mt-2 text-dark">Rumah Sakit Sehat Bahagia</h3>
+    </div>
+
+    <!-- Form Login -->
+    <div class="card" style="border: none">
+      <div class="card-body login-card-body">
+        <form>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Username">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" 
+                  style="background: #1e3c72; border: none">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warna bawah -->
+  <div class="color-bar-bottom"></div>
+</body>
+</html>
