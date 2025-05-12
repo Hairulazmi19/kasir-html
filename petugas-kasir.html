@@ -64,12 +64,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="menu-lihat-harga">
-                <i class="nav-icon fas fa-tags"></i>
-                <p>Lihat Harga Obat</p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="#" class="nav-link" id="menu-riwayat">
                 <i class="nav-icon fas fa-history"></i>
                 <p>Riwayat Transaksi</p>
@@ -92,10 +86,12 @@
 
     <!-- Content Wrapper -->
     <div class="content-wrapper">
-      <section class="content-header">
+      <!-- Section Antrian Pembayaran (default tampil) -->
+      <section class="content-header" id="header-pembayaran">
         <h1>Antrian Pembayaran</h1>
       </section>
-      <section class="content">
+
+      <section class="content" id="pembayaran">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -144,113 +140,77 @@
                         </button>
                       </td>
                     </tr>
+                    <!-- Tambahkan data antrian lainnya di sini -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                    <!-- 7 data antrian tambahan -->
-                    <tr data-id="A103" data-nama="Citra Dewi" data-poli="Kandungan" data-status="Menunggu"
-                      data-layanan='[{"nama":"USG","harga":150000},{"nama":"Konsultasi Dokter","harga":100000}]'
-                      data-obat='[{"nama":"Vitamin Prenatal","harga":50000,"qty":1}]'>
+      <!-- Section Riwayat Transaksi (default sembunyi) -->
+      <section class="content d-none" id="riwayat-transaksi">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Daftar Riwayat Transaksi</h3>
+              </div>
+              <div class="card-body">
+                <!-- Form filter dan pencarian -->
+                <form id="form-filter-riwayat" class="mb-3">
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label for="filterTanggalDari" class="form-label">Tanggal Dari</label>
+                      <input type="date" id="filterTanggalDari" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="filterTanggalSampai" class="form-label">Tanggal Sampai</label>
+                      <input type="date" id="filterTanggalSampai" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="filterCari" class="form-label">Cari (No. Transaksi / Nama Pasien)</label>
+                      <input type="text" id="filterCari" class="form-control" placeholder="Ketik untuk mencari..." />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                      <button id="btnResetFilter" class="btn btn-secondary w-100">Reset Filter</button>
+                    </div>
+                  </div>
+                </form>
+                <!-- Tabel riwayat transaksi -->
+                <table class="table table-bordered table-hover" id="riwayat-transaksi-table">
+                  <thead>
+                    <tr>
+                      <th>No. Transaksi</th>
+                      <th>Tanggal</th>
+                      <th>Nama Pasien</th>
+                      <th>Poli</th>
+                      <th>Total Bayar (Rp)</th>
+                      <th>Metode Pembayaran</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
                       <td>A103</td>
-                      <td>Citra Dewi</td>
-                      <td>Kandungan</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
-                    </tr>
-                    <tr data-id="A104" data-nama="Dedi Prasetyo" data-poli="Umum" data-status="Menunggu"
-                      data-layanan='[{"nama":"Konsultasi Dokter","harga":100000}]'
-                      data-obat='[{"nama":"Paracetamol","harga":15000,"qty":1},{"nama":"Antibiotik","harga":25000,"qty":1}]'>
-                      <td>A104</td>
-                      <td>Dedi Prasetyo</td>
+                      <td>2025-05-10 09:30</td>
+                      <td>Budi Santoso</td>
                       <td>Umum</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
+                      <td>135.000</td>
+                      <td>Tunai</td>
+                      <td><span class="badge bg-success">Selesai</span></td>
                     </tr>
-                    <tr data-id="A105" data-nama="Eka Putri" data-poli="Bedah" data-status="Menunggu"
-                      data-layanan='[{"nama":"Operasi Minor","harga":500000}]'
-                      data-obat='[{"nama":"Antibiotik","harga":25000,"qty":3},{"nama":"Obat Pereda Nyeri","harga":20000,"qty":2}]'>
-                      <td>A105</td>
-                      <td>Eka Putri</td>
-                      <td>Bedah</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
+                    <tr>
+                      <td>A104</td>
+                      <td>2025-05-11 14:15</td>
+                      <td>Ani Wijaya</td>
+                      <td>Gigi</td>
+                      <td>120.000</td>
+                      <td>Debit</td>
+                      <td><span class="badge bg-success">Selesai</span></td>
                     </tr>
-                    <tr data-id="A106" data-nama="Fajar Nugroho" data-poli="Kulit" data-status="Menunggu"
-                      data-layanan='[{"nama":"Konsultasi Kulit","harga":120000}]'
-                      data-obat='[{"nama":"Salep Kulit","harga":35000,"qty":1}]'>
-                      <td>A106</td>
-                      <td>Fajar Nugroho</td>
-                      <td>Kulit</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
-                    </tr>
-                    <tr data-id="A107" data-nama="Gina Marlina" data-poli="THT" data-status="Menunggu"
-                      data-layanan='[{"nama":"Pemeriksaan THT","harga":90000}]'
-                      data-obat='[{"nama":"Obat Telinga","harga":40000,"qty":2}]'>
-                      <td>A107</td>
-                      <td>Gina Marlina</td>
-                      <td>THT</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
-                    </tr>
-                    <tr data-id="A108" data-nama="Hendra Saputra" data-poli="Anak" data-status="Menunggu"
-                      data-layanan='[{"nama":"Imunisasi","harga":80000}]'
-                      data-obat='[{"nama":"Vitamin Anak","harga":30000,"qty":2}]'>
-                      <td>A108</td>
-                      <td>Hendra Saputra</td>
-                      <td>Anak</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
-                    </tr>
-                    <tr data-id="A109" data-nama="Intan Permata" data-poli="Gizi" data-status="Menunggu"
-                      data-layanan='[{"nama":"Konsultasi Gizi","harga":70000}]'
-                      data-obat='[{"nama":"Suplemen","harga":45000,"qty":1}]'>
-                      <td>A109</td>
-                      <td>Intan Permata</td>
-                      <td>Gizi</td>
-                      <td class="status-menunggu">
-                        <i class="fas fa-clock me-1"></i> Menunggu
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-primary btn-proses">
-                          <i class="fas fa-check me-1"></i> Proses
-                        </button>
-                      </td>
-                    </tr>
+                    <!-- Tambahkan data riwayat transaksi lainnya di sini -->
                   </tbody>
                 </table>
               </div>
@@ -259,7 +219,6 @@
         </div>
       </section>
     </div>
-
     <!-- Modal Detail Transaksi -->
     <div class="modal fade" id="modalDetailTransaksi" tabindex="-1" aria-labelledby="modalDetailTransaksiLabel"
       aria-hidden="true">
@@ -357,33 +316,7 @@
         </div>
       </div>
     </div>
-    <!-- Modal Daftar Harga Obat -->
-    <div class="modal fade" id="modalHargaObat" tabindex="-1" aria-labelledby="modalHargaObatLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalHargaObatLabel">Daftar Harga Obat</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-          </div>
-          <div class="modal-body">
-            <table class="table table-bordered table-hover" id="tabelHargaObat">
-              <thead>
-                <tr>
-                  <th>Nama Obat</th>
-                  <th>Harga Satuan (Rp)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Data obat akan diisi lewat JavaScript -->
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -491,7 +424,32 @@
 
           // Di sini Anda bisa menambahkan logika untuk update status antrian, refresh tabel, dll.
         });
-        
+        // Event klik menu sidebar
+        $('#menu-pembayaran').on('click', function (e) {
+          e.preventDefault();
+          // Tampilkan section pembayaran, sembunyikan riwayat
+          $('#pembayaran, #header-pembayaran').removeClass('d-none');
+          $('#riwayat-transaksi, #header-riwayat').addClass('d-none');
+
+          // Update active class menu
+          $('#menu-pembayaran').addClass('active');
+          $('#menu-riwayat').removeClass('active');
+        });
+
+        $('#menu-riwayat').on('click', function (e) {
+          e.preventDefault();
+          // Tampilkan section riwayat, sembunyikan pembayaran
+          $('#riwayat-transaksi, #header-riwayat').removeClass('d-none');
+          $('#pembayaran, #header-pembayaran').addClass('d-none');
+
+          // Update active class menu
+          $('#menu-riwayat').addClass('active');
+          $('#menu-pembayaran').removeClass('active');
+        });
+
+        // (Opsional) Anda bisa inisialisasi tampilan default di sini jika perlu
+        // Contoh: tampilkan pembayaran saat halaman dimuat
+        $('#menu-pembayaran').trigger('click');
       });
     </script>
   </div>
