@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Petugas Kasir - Sistem Rumah Sakit</title>
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Agar tabel rincian biaya di modal tidak terlalu kecil */
+    #rincian-biaya-table th,
+    #rincian-biaya-table td {
+      vertical-align: middle;
+    }
+
+    .status-menunggu {
+      color: #ffc107;
+      /* Warna kuning amber */
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item d-flex align-items-center">
+          <i class="fas fa-user me-2"></i>
+          <span>Welcome, Kasir</span>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 d-flex flex-column">
+      <a href="#" class="brand-link d-flex align-items-center">
+        <i class="fas fa-wallet ms-3 me-2"></i>
+        <span class="brand-text font-weight-light">Kasir RS</span>
+      </a>
+      <div class="sidebar flex-grow-1 d-flex flex-column">
+        <nav class="mt-2 flex-grow-1">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+            <li class="nav-item">
+              <a href="#" class="nav-link active" id="menu-pembayaran">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Pembayaran</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="menu-lihat-harga">
+                <i class="nav-icon fas fa-tags"></i>
+                <p>Lihat Harga Obat</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="menu-riwayat">
+                <i class="nav-icon fas fa-history"></i>
+                <p>Riwayat Transaksi</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav>
+          <ul class="nav nav-pills nav-sidebar flex-column mb-3">
+            <li class="nav-item">
+              <a href="#" class="nav-link text-danger" id="btn-logout">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <section class="content-header">
+        <h1>Antrian Pembayaran</h1>
+      </section>
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Daftar Tunggu Pembayaran</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-hover" id="waiting-list-table">
+                  <thead>
+                    <tr>
+                      <th>No. Antrian</th>
+                      <th>Nama Pasien</th>
+                      <th>Poli</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-id="A101" data-nama="Budi Santoso" data-poli="Umum" data-status="Menunggu"
+                      data-layanan='[{"nama":"Konsultasi Dokter","harga":100000},{"nama":"Tindakan","harga":20000}]'
+                      data-obat='[{"nama":"Paracetamol","harga":15000,"qty":2},{"nama":"Vitamin C","harga":15000,"qty":1}]'>
+                      <td>A101</td>
+                      <td>Budi Santoso</td>
+                      <td>Umum</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A102" data-nama="Ani Wijaya" data-poli="Gigi" data-status="Menunggu"
+                      data-layanan='[{"nama":"Pembersihan Gigi","harga":120000}]'
+                      data-obat='[{"nama":"Obat Kumur","harga":30000,"qty":3}]'>
+                      <td>A102</td>
+                      <td>Ani Wijaya</td>
+                      <td>Gigi</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- 7 data antrian tambahan -->
+                    <tr data-id="A103" data-nama="Citra Dewi" data-poli="Kandungan" data-status="Menunggu"
+                      data-layanan='[{"nama":"USG","harga":150000},{"nama":"Konsultasi Dokter","harga":100000}]'
+                      data-obat='[{"nama":"Vitamin Prenatal","harga":50000,"qty":1}]'>
+                      <td>A103</td>
+                      <td>Citra Dewi</td>
+                      <td>Kandungan</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A104" data-nama="Dedi Prasetyo" data-poli="Umum" data-status="Menunggu"
+                      data-layanan='[{"nama":"Konsultasi Dokter","harga":100000}]'
+                      data-obat='[{"nama":"Paracetamol","harga":15000,"qty":1},{"nama":"Antibiotik","harga":25000,"qty":1}]'>
+                      <td>A104</td>
+                      <td>Dedi Prasetyo</td>
+                      <td>Umum</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A105" data-nama="Eka Putri" data-poli="Bedah" data-status="Menunggu"
+                      data-layanan='[{"nama":"Operasi Minor","harga":500000}]'
+                      data-obat='[{"nama":"Antibiotik","harga":25000,"qty":3},{"nama":"Obat Pereda Nyeri","harga":20000,"qty":2}]'>
+                      <td>A105</td>
+                      <td>Eka Putri</td>
+                      <td>Bedah</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A106" data-nama="Fajar Nugroho" data-poli="Kulit" data-status="Menunggu"
+                      data-layanan='[{"nama":"Konsultasi Kulit","harga":120000}]'
+                      data-obat='[{"nama":"Salep Kulit","harga":35000,"qty":1}]'>
+                      <td>A106</td>
+                      <td>Fajar Nugroho</td>
+                      <td>Kulit</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A107" data-nama="Gina Marlina" data-poli="THT" data-status="Menunggu"
+                      data-layanan='[{"nama":"Pemeriksaan THT","harga":90000}]'
+                      data-obat='[{"nama":"Obat Telinga","harga":40000,"qty":2}]'>
+                      <td>A107</td>
+                      <td>Gina Marlina</td>
+                      <td>THT</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A108" data-nama="Hendra Saputra" data-poli="Anak" data-status="Menunggu"
+                      data-layanan='[{"nama":"Imunisasi","harga":80000}]'
+                      data-obat='[{"nama":"Vitamin Anak","harga":30000,"qty":2}]'>
+                      <td>A108</td>
+                      <td>Hendra Saputra</td>
+                      <td>Anak</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-id="A109" data-nama="Intan Permata" data-poli="Gizi" data-status="Menunggu"
+                      data-layanan='[{"nama":"Konsultasi Gizi","harga":70000}]'
+                      data-obat='[{"nama":"Suplemen","harga":45000,"qty":1}]'>
+                      <td>A109</td>
+                      <td>Intan Permata</td>
+                      <td>Gizi</td>
+                      <td class="status-menunggu">
+                        <i class="fas fa-clock me-1"></i> Menunggu
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-proses">
+                          <i class="fas fa-check me-1"></i> Proses
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal Detail Transaksi -->
+    <div class="modal fade" id="modalDetailTransaksi" tabindex="-1" aria-labelledby="modalDetailTransaksiLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetailTransaksiLabel">Detail Transaksi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formPembayaran">
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="noAntrian" class="form-label">No. Antrian</label>
+                  <input type="text" class="form-control" id="noAntrian" readonly />
+                </div>
+                <div class="col-md-4">
+                  <label for="namaPasien" class="form-label">Nama Pasien</label>
+                  <input type="text" class="form-control" id="namaPasien" readonly />
+                </div>
+                <div class="col-md-4">
+                  <label for="poli" class="form-label">Poli</label>
+                  <input type="text" class="form-control" id="poli" readonly />
+                </div>
+              </div>
+
+              <h5>Rincian Biaya</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Layanan</h6>
+                  <table class="table table-sm table-bordered" id="rincian-layanan-table">
+                    <thead>
+                      <tr>
+                        <th>Nama Layanan</th>
+                        <th>Harga (Rp)</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Total Layanan</th>
+                        <th id="total-layanan">0</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <h6>Obat</h6>
+                  <table class="table table-sm table-bordered" id="rincian-obat-table">
+                    <thead>
+                      <tr>
+                        <th>Nama Obat</th>
+                        <th>Qty</th>
+                        <th>Harga (Rp)</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Total Obat</th>
+                        <th id="total-obat">0</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 offset-md-8">
+                  <label for="totalBayar" class="form-label fw-bold">Total Bayar (Rp)</label>
+                  <input type="text" class="form-control fw-bold" id="totalBayar" readonly />
+                </div>
+              </div>
+
+              <div class="mb-3 mt-3">
+                <label for="metodePembayaran" class="form-label">Metode Pembayaran</label>
+                <select class="form-select" id="metodePembayaran" required>
+                  <option value="" disabled selected>Pilih metode pembayaran</option>
+                  <option value="tunai">Tunai</option>
+                  <option value="debit">Debit</option>
+                  <option value="transfer">Transfer</option>
+                  <option value="ewallet">E-Wallet</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="btnBayarCetak" disabled>
+              <i class="fas fa-print me-1"></i> Bayar & Cetak Struk
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <i class="fas fa-times me-1"></i> Batal
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Daftar Harga Obat -->
+    <div class="modal fade" id="modalHargaObat" tabindex="-1" aria-labelledby="modalHargaObatLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalHargaObatLabel">Daftar Harga Obat</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered table-hover" id="tabelHargaObat">
+              <thead>
+                <tr>
+                  <th>Nama Obat</th>
+                  <th>Harga Satuan (Rp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Data obat akan diisi lewat JavaScript -->
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // Fungsi untuk format angka ke format rupiah dengan titik ribuan
+        function formatRupiah(angka) {
+          return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Ketika tombol Proses diklik, tampilkan modal dengan data baris terkait
+        $('.btn-proses').on('click', function () {
+          const row = $(this).closest('tr');
+          const noAntrian = row.data('id');
+          const namaPasien = row.data('nama');
+          const poli = row.data('poli');
+          const layananJson = row.attr('data-layanan');
+          const obatJson = row.attr('data-obat');
+
+          // Parse JSON data layanan dan obat
+          let layanan = [];
+          let obat = [];
+          try {
+            layanan = JSON.parse(layananJson);
+          } catch (e) {
+            layanan = [];
+          }
+          try {
+            obat = JSON.parse(obatJson);
+          } catch (e) {
+            obat = [];
+          }
+
+          // Isi form info pasien
+          $('#noAntrian').val(noAntrian);
+          $('#namaPasien').val(namaPasien);
+          $('#poli').val(poli);
+
+          // Isi tabel rincian layanan
+          const tbodyLayanan = $('#rincian-layanan-table tbody');
+          tbodyLayanan.empty();
+          let totalLayanan = 0;
+          layanan.forEach(item => {
+            tbodyLayanan.append(
+              `<tr><td>${item.nama}</td><td>${formatRupiah(item.harga)}</td></tr>`
+            );
+            totalLayanan += item.harga;
+          });
+          $('#total-layanan').text(formatRupiah(totalLayanan));
+
+          // Isi tabel rincian obat
+          const tbodyObat = $('#rincian-obat-table tbody');
+          tbodyObat.empty();
+          let totalObat = 0;
+          obat.forEach(item => {
+            const qty = item.qty || 1; // jika ada qty di data, pakai itu, kalau tidak pakai 1
+            const hargaTotal = item.harga * qty;
+            tbodyObat.append(
+              `<tr><td>${item.nama}</td><td>${qty}</td><td>${formatRupiah(hargaTotal)}</td></tr>`
+            );
+            totalObat += hargaTotal;
+          });
+          $('#total-obat').text(formatRupiah(totalObat));
+
+          // Hitung total bayar keseluruhan
+          const totalBayar = totalLayanan + totalObat;
+          $('#totalBayar').val(formatRupiah(totalBayar));
+
+          // Reset metode pembayaran dan tombol bayar
+          $('#metodePembayaran').val('');
+          $('#btnBayarCetak').prop('disabled', true);
+
+          // Tampilkan modal
+          $('#modalDetailTransaksi').modal('show');
+        });
+
+        // Enable tombol Bayar & Cetak jika metode pembayaran dipilih
+        $('#metodePembayaran').on('change', function () {
+          const metode = $(this).val();
+          $('#btnBayarCetak').prop('disabled', !metode);
+        });
+
+        // Simulasi aksi Bayar & Cetak Struk
+        $('#btnBayarCetak').on('click', function () {
+          const noAntrian = $('#noAntrian').val();
+          const namaPasien = $('#namaPasien').val();
+          const poli = $('#poli').val();
+          const totalBayar = $('#totalBayar').val();
+          const metode = $('#metodePembayaran').val();
+
+          alert(
+            `Pembayaran berhasil!\n\n` +
+            `No. Antrian: ${noAntrian}\n` +
+            `Nama Pasien: ${namaPasien}\n` +
+            `Poli: ${poli}\n` +
+            `Total Bayar: Rp ${totalBayar}\n` +
+            `Metode Pembayaran: ${metode}\n\n` +
+            `Struk akan dicetak.`
+          );
+
+          // Tutup modal setelah pembayaran
+          $('#modalDetailTransaksi').modal('hide');
+
+          // Di sini Anda bisa menambahkan logika untuk update status antrian, refresh tabel, dll.
+        });
+        
+      });
+    </script>
+  </div>
+</body>
+
+</html>
